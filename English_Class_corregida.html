@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Class | Plataforma educativa</title>
+<style>
+:root{
+ --navy:#102b55;--blue:#1d4e89;--blue2:#2869ad;--sky:#dceeff;
+ --pale:#f2f8ff;--cyan:#bfe6f7;--ink:#24364b;--muted:#718198;
+ --line:#d9e6f2;--white:#fff;--green:#23845b;--red:#c94d5b;--amber:#bd7b1b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--pale);color:var(--ink)}
+button,input,select,textarea{font:inherit}
+button{border:0;cursor:pointer;border-radius:9px;padding:11px 16px;background:var(--blue);color:#fff;font-weight:600;transition:.2s}
+button:hover{background:var(--blue2)}
+button.secondary{background:#e7f1fb;color:var(--blue)}
+button.secondary:hover{background:#d6e8f8}
+button.danger{background:#fff0f1;color:var(--red)}
+input,select,textarea{width:100%;padding:11px 12px;border:1px solid #cbd9e8;border-radius:9px;background:#fff;color:var(--ink);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue2);box-shadow:0 0 0 3px #2869ad18}
+textarea{min-height:100px;resize:vertical}
+label{display:block;font-size:13px;font-weight:700;color:#405773;margin:12px 0 6px}
+header{background:linear-gradient(115deg,var(--navy),var(--blue2));color:white;padding:19px 5%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:42px;height:42px;border-radius:13px;background:#ffffff20;display:grid;place-items:center;font-weight:800;font-size:19px}
+.brand h1{font-size:21px;margin:0}.brand p{margin:4px 0 0;color:#d7e9ff;font-size:12px}
+.header-note{font-size:13px;color:#d7e9ff}
+main{width:min(1200px,94%);margin:28px auto 50px}
+.hidden{display:none!important}
+#access{max-width:980px;margin:35px auto}
+.welcome{background:linear-gradient(135deg,#12315f,#2869ad);color:white;padding:34px;border-radius:18px 18px 0 0}
+.welcome h2{font-size:28px;margin:0 0 8px}.welcome p{margin:0;color:#dcecff;line-height:1.5}
+.auth-grid{display:grid;grid-template-columns:1fr 1fr;background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 18px 18px;overflow:hidden;box-shadow:0 12px 35px #173d6812}
+.auth-panel{padding:28px}.auth-panel+ .auth-panel{border-left:1px solid var(--line);background:#f8fbff}
+.auth-panel h3{margin:0 0 8px;color:var(--navy)}.hint{font-size:12px;color:var(--muted);line-height:1.5}
+.full{width:100%;margin-top:15px}
+#accessMessage{min-height:20px;color:var(--red);font-size:13px}
+.app-shell{display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;align-items:start}
+.sidebar{background:var(--navy);border-radius:16px;padding:20px 13px;color:white;position:sticky;top:18px}
+.profile{padding:5px 9px 18px;border-bottom:1px solid #ffffff25;margin-bottom:14px}
+.avatar{width:42px;height:42px;border-radius:13px;background:#d9efff;color:var(--navy);display:grid;place-items:center;font-weight:800;margin-bottom:10px}
+.profile strong{display:block;font-size:14px}.profile small{display:block;color:#b9d5f2;margin-top:4px}
+.nav-label{font-size:10px;letter-spacing:1.3px;color:#8fb6df;padding:8px 10px}
+.nav-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;color:#dcecff;padding:12px 11px;margin:3px 0;font-weight:500}
+.nav-btn:hover,.nav-btn.active{background:#ffffff20;color:#fff}
+.nav-btn .nav-icon{width:22px;text-align:center;font-size:16px}
+.logout{width:100%;margin-top:17px;background:#ffffff16;color:white}
+.logout:hover{background:#ffffff2b}
+.content{min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+.topbar h2{margin:0;color:var(--navy);font-size:25px}.topbar p{margin:5px 0 0;color:var(--muted);font-size:13px}
+.group-box{display:flex;align-items:center;gap:9px;background:white;padding:9px 12px;border:1px solid var(--line);border-radius:11px;min-width:245px}
+.group-box label{margin:0;white-space:nowrap}.group-box select{width:auto;min-width:110px;padding:8px}
+.section{background:white;border:1px solid var(--line);border-radius:15px;padding:22px;margin-bottom:18px;box-shadow:0 4px 14px #183b6410}
+.section h3{margin:0 0 15px;color:var(--navy);font-size:18px}
+.section h4{margin:0 0 8px;color:var(--blue)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat{background:white;border:1px solid var(--line);border-radius:13px;padding:16px}
+.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;color:var(--navy);font-size:25px;margin-top:7px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fff}
+.card p{font-size:13px;line-height:1.5;color:#53677f}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.pill{display:inline-block;border-radius:20px;padding:5px 9px;background:#e6f3ff;color:var(--blue);font-size:11px;font-weight:700}
+.pill.green{background:#e5f6ee;color:var(--green)}.pill.orange{background:#fff3df;color:var(--amber)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.form-grid .wide{grid-column:1/-1}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:480px}
+th,td{padding:12px 11px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:#eaf4ff;color:#244d79;font-size:12px}
+tr:last-child td{border-bottom:0}
+.empty{padding:20px;text-align:center;color:var(--muted);background:#f7fbff;border-radius:10px;font-size:13px}
+.attendance-row{display:grid;grid-template-columns:minmax(140px,1fr) auto;align-items:center;gap:12px;padding:12px;border-bottom:1px solid var(--line)}
+.attendance-row:last-child{border-bottom:0}
+.attendance-options{display:flex;gap:7px}
+.attendance-options button{width:38px;height:38px;padding:0;border-radius:50%;background:#f1f6fc;color:var(--blue);border:1px solid #cbd9e8;font-size:17px}
+.attendance-options button.selected.present{background:var(--green);color:white;border-color:var(--green)}
+.attendance-options button.selected.absent{background:var(--red);color:white;border-color:var(--red)}
+.attendance-options button.selected.late{background:var(--amber);color:white;border-color:var(--amber)}
+.legend{font-size:12px;color:var(--muted);margin:-5px 0 12px}
+footer{text-align:center;color:#8293a7;padding:20px;font-size:12px}
+@media(max-width:850px){.app-shell{grid-template-columns:1fr}.sidebar{position:static}.nav-list{display:grid;grid-template-columns:repeat(4,1fr)}.nav-label{display:none}.nav-btn{justify-content:center;text-align:center;font-size:12px;padding:10px 5px}.nav-btn .nav-icon{display:none}.logout{width:auto}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){header{padding:15px 4%}.header-note{display:none}main{width:94%;margin-top:18px}.auth-grid{grid-template-columns:1fr}.auth-panel+.auth-panel{border-left:0;border-top:1px solid var(--line)}.welcome{padding:25px}.welcome h2{font-size:23px}.auth-panel{padding:22px}.topbar{align-items:flex-start;flex-direction:column}.group-box{width:100%;justify-content:space-between}.group-box select{flex:1}.cards,.form-grid{grid-template-columns:1fr}.form-grid .wide{grid-column:auto}.section{padding:16px}.nav-list{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="brand-mark">EC</div><div><h1>English Class</h1><p>Plataforma de aprendizaje</p></div></div>
+ <div class="header-note">Aprende · Practica · Avanza</div>
+</header>
+<main>
+<section id="access">
+ <div class="welcome"><h2>Bienvenido a English Class</h2><p>Un espacio para que maestros y alumnos organicen sus clases, actividades y avances de inglés.</p></div>
+ <div class="auth-grid">
+  <div class="auth-panel">
+   <h3>Iniciar sesión</h3><p class="hint">Ingresa con tu correo institucional y contraseña.</p>
+   <form id="loginForm">
+    <label for="loginEmail">Correo institucional</label><input id="loginEmail" type="email" placeholder="usuario@institucion.edu.mx" required>
+    <label for="loginPassword">Contraseña</label><input id="loginPassword" type="password" required>
+    <button class="full" type="submit">Entrar a mi cuenta</button>
+   </form>
+  </div>
+  <div class="auth-panel">
+   <h3>Crear cuenta</h3><p class="hint">Elige el tipo de cuenta que necesitas. Tu acceso se conservará para los próximos inicios de sesión.</p>
+   <form id="registerForm">
+    <label for="registerRole">Tipo de cuenta</label><select id="registerRole" required><option value="alumno">Alumno</option><option value="maestro">Maestro</option></select>
+    <label for="registerName">Nombre completo</label><input id="registerName" required maxlength="70">
+    <label for="registerEmail">Correo institucional</label><input id="registerEmail" type="email" placeholder="usuario@institucion.edu.mx" required>
+    <label for="registerPassword">Crear contraseña</label><input id="registerPassword" type="password" minlength="6" required>
+    <div id="studentGroupField">
+     <label for="registerGroup">Semestre y grupo</label><select id="registerGroup"><option value="1° A">1° A</option><option value="1° B">1° B</option><option value="2° A">2° A</option><option value="2° B">2° B</option><option value="3° A">3° A</option><option value="3° B">3° B</option><option value="4° A">4° A</option><option value="4° B">4° B</option><option value="5° A">5° A</option><option value="5° B">5° B</option><option value="6° A">6° A</option><option value="6° B">6° B</option></select>
+    </div>
+    <button class="full" type="submit">Crear cuenta</button>
+   </form>
+  </div>
+ </div>
+ <p id="accessMessage" role="status"></p>
+ <p class="hint">Demo escolar: la detección del rol se configura en la función <b>detectRole()</b> del código. Ajusta ahí el formato real de los correos docentes de tu institución.</p>
+</section>
+
+<div id="teacherApp" class="app-shell hidden">
+ <aside class="sidebar">
+  <div class="profile"><div class="avatar">M</div><strong id="teacherName"></strong><small>Cuenta de maestro</small></div>
+  <div class="nav-label">MENÚ PRINCIPAL</div>
+  <div class="nav-list">
+   <button class="nav-btn active" data-page="t-activities"><span class="nav-icon">▣</span>Actividades</button>
+   <button class="nav-btn" data-page="t-grades"><span class="nav-icon">▤</span>Calificaciones</button>
+   <button class="nav-btn" data-page="t-attendance"><span class="nav-icon">✓</span>Asistencia</button>
+   <button class="nav-btn" data-page="t-students"><span class="nav-icon">♧</span>Alumnos</button>
+  </div>
+  <button class="logout" onclick="logout()">Cerrar sesión</button>
+ </aside>
+ <div class="content">
+  <div class="topbar"><div><h2 id="teacherPageTitle">Actividades</h2><p>Administra el trabajo de tu grupo.</p></div><div class="group-box"><label for="teacherGroup">Grupo:</label><select id="teacherGroup"><option>1° A</option><option>1° B</option><option>2° A</option><option>2° B</option><option>3° A</option><option>3° B</option><option>4° A</option><option>4° B</option><option>5° A</option><option>5° B</option><option>6° A</option><option>6° B</option></select></div></div>
+
+  <div id="t-activities" class="page">
+   <div class="stats"><div class="stat"><span>Alumnos del grupo</span><strong id="statStudents">0</strong></div><div class="stat"><span>Tareas asignadas</span><strong id="statTasks">0</strong></div><div class="stat"><span>Entregas recibidas</span><strong id="statSubmitted">0</strong></div><div class="stat"><span>Por revisar</span><strong id="statPending">0</strong></div></div>
+   <section class="section"><h3>Actividades listas para clase</h3><div class="cards" id="readyActivities"></div></section>
+   <section class="section"><h3>Asignar una tarea</h3>
+    <form id="taskForm">
+     <div class="form-grid">
+      <div><label for="taskTitle">Nombre de la tarea</label><input id="taskTitle" required maxlength="100" placeholder="Ej. Simple Present Practice"></div>
+      <div><label for="taskDate">Fecha límite</label><input id="taskDate" type="date" required></div>
+      <div class="wide"><label for="taskDescription">¿En qué consiste?</label><textarea id="taskDescription" required placeholder="Escribe las instrucciones para los alumnos..."></textarea></div>
+      <div class="wide"><label for="taskAudience">¿A quién se asigna?</label><select id="taskAudience"><option value="all">Todo el grupo</option><option value="selected">Seleccionar alumnos</option></select></div>
+      <div class="wide hidden" id="selectedStudentsWrap"><label for="selectedStudents">Selecciona uno o varios alumnos</label><select id="selectedStudents" multiple size="4"></select><p class="hint">Mantén presionada la tecla Ctrl (o Cmd) para elegir varios alumnos.</p></div>
+     </div>
+     <div class="actions"><button type="submit">Publicar tarea</button></div>
+    </form>
+   </section>
+   <section class="section"><h3>Tareas asignadas y entregas</h3><div id="teacherTasks"></div></section>
+  </div>
+
+  <div id="t-grades" class="page hidden">
+   <section class="section"><h3>Registrar calificación</h3>
+    <form id="gradeForm"><div class="form-grid">
+     <div><label for="gradeStudent">Alumno</label><select id="gradeStudent" required></select></div>
+     <div><label for="gradeType">Tipo de evaluación</label><select id="gradeType"><option>Actividad de clase</option><option>Tarea</option><option>Examen</option></select></div>
+     <div><label for="gradeName">Nombre</label><input id="gradeName" required placeholder="Ej. Examen unidad 1"></div>
+     <div><label for="gradeValue">Calificación (0 a 100)</label><input id="gradeValue" type="number" min="0" max="100" required></div>
+    </div><div class="actions"><button type="submit">Guardar calificación</button></div></form>
+   </section>
+   <section class="section"><h3>Promedios del grupo</h3><div id="groupAverages"></div></section>
+   <section class="section"><h3>Registro de calificaciones</h3><div id="teacherGrades"></div></section>
+  </div>
+
+  <div id="t-attendance" class="page hidden">
+   <section class="section"><h3>Lista de asistencia diaria</h3><p class="legend">✓ Presente &nbsp;&nbsp; ✕ Falta &nbsp;&nbsp; ○ Retardo</p>
+    <label for="attendanceDate">Fecha</label><input id="attendanceDate" type="date">
+    <div id="attendanceList" style="margin-top:14px"></div><div class="actions"><button onclick="saveAttendance()">Guardar asistencia</button></div>
+   </section>
+   <section class="section"><h3>Historial de asistencia</h3><div id="attendanceHistory"></div></section>
+  </div>
+
+  <div id="t-students" class="page hidden">
+   <section class="section"><h3>Alumnos del grupo</h3><div id="teacherStudents"></div></section>
+   <section class="section"><h3>Agregar alumno al grupo</h3><p class="hint">El alumno debe crear su cuenta con su correo institucional y seleccionar este grupo. Aquí puedes consultar quiénes están registrados.</p></section>
+  </div>
+ </div>
+</div>
+
+<div id="studentApp" class="app-shell hidden">
+ <aside class="sidebar">
+  <div class="profile"><div class="avatar">A</div><strong id="studentName"></strong><small id="studentGroupLabel">Cuenta de alumno</small></div>
+  <div class="nav-label">MI ESPACIO</div>
+  <div class="nav-list">
+   <button class="nav-btn active" data-page="s-activities">Actividades</button>
+   <button class="nav-btn" data-page="s-grades">Calificaciones</button>
+   <button class="nav-btn" data-page="s-attendance">Asistencia</button>
+  </div>
+  <button class="logout" onclick="logout()">Cerrar sesión</button>
+ </aside>
+ <div class="content">
+  <div class="topbar"><div><h2 id="studentPageTitle">Actividades</h2><p>Consulta tus tareas y el avance de tu aprendizaje.</p></div><div class="group-box"><label>Mi grupo:</label><strong id="studentGroupTop"></strong></div></div>
+  <div id="s-activities" class="page">
+   <section class="section"><h3>Mis tareas</h3><div id="studentTasks"></div></section>
+  </div>
+  <div id="s-grades" class="page hidden">
+   <div class="stats"><div class="stat"><span>Promedio actual</span><strong id="studentAverage">—</strong></div><div class="stat"><span>Evaluaciones</span><strong id="studentGradeCount">0</strong></div></div>
+   <section class="section"><h3>Detalle de calificaciones</h3><div id="studentGrades"></div></section>
+  </div>
+  <div id="s-attendance" class="page hidden">
+   <section class="section"><h3>Mi asistencia</h3><div id="studentAttendance"></div></section>
+  </div>
+ </div>
+</div>
+</main>
+<footer>English Class · Plataforma educativa de inglés</footer>
+
+<script>
+const GROUPS=["1° A","1° B","2° A","2° B","3° A","3° B","4° A","4° B","5° A","5° B","6° A","6° B"];
+const ready=[
+ {title:"Simple Present: Build a sentence",type:"Gramática",description:"Ordena mentalmente las palabras para formar oraciones en presente simple.",example:"She / to school / walks / every day."},
+ {title:"Listening: Everyday conversations",type:"Auditiva",description:"Escucha un diálogo en inglés y responde preguntas sobre la idea principal y los detalles.",example:"Actividad de comprensión auditiva."},
+ {title:"Reading: A day in my life",type:"Lectura",description:"Lee un texto breve sobre la rutina de una persona e identifica verbos y expresiones de tiempo.",example:"Actividad de comprensión lectora."},
+ {title:"Vocabulary: Daily routines",type:"Vocabulario",description:"Relaciona palabras y expresiones con actividades cotidianas y escribe cinco ejemplos.",example:"wake up · have breakfast · go to school"}
+];
+let users=JSON.parse(localStorage.getItem("ec6_users")||"[]");
+let tasks=JSON.parse(localStorage.getItem("ec6_tasks")||"[]");
+let grades=JSON.parse(localStorage.getItem("ec6_grades")||"[]");
+let attendance=JSON.parse(localStorage.getItem("ec6_attendance")||"[]");
+let current=null;
+function persist(){localStorage.setItem("ec6_users",JSON.stringify(users));localStorage.setItem("ec6_tasks",JSON.stringify(tasks));localStorage.setItem("ec6_grades",JSON.stringify(grades));localStorage.setItem("ec6_attendance",JSON.stringify(attendance))}
+function id(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+// El rol se elige al crear la cuenta; nunca se deduce del correo.
+function updateRoleFields(){
+ document.getElementById("studentGroupField").classList.toggle(
+  "hidden", document.getElementById("registerRole").value !== "alumno"
+ );
+}
+document.getElementById("registerRole").addEventListener("change",updateRoleFields);
+updateRoleFields();
+function message(t){document.getElementById("accessMessage").textContent=t}
+function groupStudents(){return users.filter(u=>u.role==="alumno"&&u.group===document.getElementById("teacherGroup").value)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function showApp(){
+ document.getElementById("access").classList.add("hidden");
+ if(current.role==="maestro"){
+  document.getElementById("teacherApp").classList.remove("hidden");document.getElementById("teacherName").textContent=current.name;
+  renderReady();refreshTeacher();showPage("t-activities");
+ }else{
+  document.getElementById("studentApp").classList.remove("hidden");document.getElementById("studentName").textContent=current.name;
+  document.getElementById("studentGroupLabel").textContent=current.group;document.getElementById("studentGroupTop").textContent=current.group;
+  refreshStudent();showPage("s-activities");
+ }
+}
+function logout(){current=null;document.getElementById("teacherApp").classList.add("hidden");document.getElementById("studentApp").classList.add("hidden");document.getElementById("access").classList.remove("hidden");document.getElementById("loginForm").reset()}
+document.getElementById("registerForm").addEventListener("submit",e=>{
+ e.preventDefault();let name=document.getElementById("registerName").value.trim(),email=document.getElementById("registerEmail").value.trim().toLowerCase(),password=document.getElementById("registerPassword").value,role=document.getElementById("registerRole").value;
+ if(users.some(u=>u.email===email)){message("Ese correo ya tiene una cuenta registrada.");return}
+ let user={id:id(),name,email,password,role,group:role==="alumno"?document.getElementById("registerGroup").value:""};
+ users.push(user);persist();e.target.reset();updateRoleFields();message("Cuenta creada como "+(role==="maestro"?"maestro":"alumno")+". Ya puedes iniciar sesión con ese correo y contraseña.");
+});
+document.getElementById("loginForm").addEventListener("submit",e=>{
+ e.preventDefault();let email=document.getElementById("loginEmail").value.trim().toLowerCase(),password=document.getElementById("loginPassword").value;
+ let u=users.find(x=>x.email===email&&x.password===password);if(!u){message("Correo o contraseña incorrectos. Si es tu primera vez, crea una cuenta.");return}
+ current=u;message("");showApp();
+});
+document.querySelectorAll(".nav-btn").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+function showPage(page){
+ let isTeacher=page.startsWith("t-"),app=document.getElementById(isTeacher?"teacherApp":"studentApp");
+ app.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));document.getElementById(page).classList.remove("hidden");
+ app.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+ let title=({ "t-activities":"Actividades","t-grades":"Calificaciones","t-attendance":"Asistencia","t-students":"Alumnos","s-activities":"Actividades","s-grades":"Calificaciones","s-attendance":"Asistencia"})[page];
+ document.getElementById(isTeacher?"teacherPageTitle":"studentPageTitle").textContent=title;
+ if(isTeacher)refreshTeacher();else refreshStudent();
+}
+document.getElementById("teacherGroup").addEventListener("change",refreshTeacher);
+document.getElementById("taskAudience").addEventListener("change",e=>document.getElementById("selectedStudentsWrap").classList.toggle("hidden",e.target.value!=="selected"));
+function renderReady(){
+ document.getElementById("readyActivities").innerHTML=ready.map((a,i)=>`<article class="card"><div class="card-top"><h4>${esc(a.title)}</h4><span class="pill">${esc(a.type)}</span></div><p>${esc(a.description)}</p><p><b>Ejemplo:</b> ${esc(a.example)}</p><button class="secondary" onclick="useActivity(${i})">Usar como referencia</button></article>`).join("");
+}
+function useActivity(i){document.getElementById("taskTitle").value=ready[i].title;document.getElementById("taskDescription").value=ready[i].description+" "+ready[i].example;document.getElementById("taskTitle").scrollIntoView({behavior:"smooth",block:"center"})}
+document.getElementById("taskForm").addEventListener("submit",e=>{
+ e.preventDefault();let group=document.getElementById("teacherGroup").value,audience=document.getElementById("taskAudience").value;
+ let selected=[...document.getElementById("selectedStudents").selectedOptions].map(o=>o.value);
+ if(audience==="selected"&&!selected.length){alert("Selecciona al menos un alumno.");return}
+ tasks.push({id:id(),teacher:current.id,group,title:document.getElementById("taskTitle").value.trim(),description:document.getElementById("taskDescription").value.trim(),date:document.getElementById("taskDate").value,students:audience==="all"?groupStudents().map(s=>s.id):selected,submissions:{}});persist();e.target.reset();document.getElementById("selectedStudentsWrap").classList.add("hidden");refreshTeacher();
+});
+function refreshTeacher(){
+ if(!current||current.role!=="maestro")return;
+ let students=groupStudents(),group=document.getElementById("teacherGroup").value,ownTasks=tasks.filter(t=>t.teacher===current.id&&t.group===group);
+ let submissions=ownTasks.reduce((n,t)=>n+Object.keys(t.submissions||{}).length,0),expected=ownTasks.reduce((n,t)=>n+(t.students||[]).length,0);
+ document.getElementById("statStudents").textContent=students.length;document.getElementById("statTasks").textContent=ownTasks.length;document.getElementById("statSubmitted").textContent=submissions;document.getElementById("statPending").textContent=Math.max(0,expected-submissions);
+ let options=students.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("");
+ document.getElementById("selectedStudents").innerHTML=options;document.getElementById("gradeStudent").innerHTML=options||'<option value="">Sin alumnos</option>';
+ document.getElementById("teacherStudents").innerHTML=students.length?`<div class="table-wrap"><table><thead><tr><th>Alumno</th><th>Correo institucional</th><th>Grupo</th></tr></thead><tbody>${students.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.group)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Todavía no hay alumnos registrados en este grupo.</div>';
+ document.getElementById("teacherTasks").innerHTML=ownTasks.length?ownTasks.map(t=>`<article class="card" style="margin-bottom:12px"><div class="card-top"><h4>${esc(t.title)}</h4><span class="pill orange">Límite: ${esc(t.date)}</span></div><p>${esc(t.description)}</p><p class="hint">Entregas:</p>${(t.students||[]).map(sid=>{let s=users.find(u=>u.id===sid),sub=t.submissions[sid];return `<div style="padding:9px 0;border-top:1px solid var(--line)"><b>${esc(s?.name||"Alumno")}</b> · ${sub?`<span class="pill green">Entregado</span> <a href="${sub.fileData}" download="${esc(sub.fileName)}">${esc(sub.fileName)}</a>`:'<span class="pill orange">Pendiente</span>'}${sub?`<div class="actions"><input style="max-width:130px" type="number" min="0" max="100" placeholder="0-100" id="score-${t.id}-${sid}"><button onclick="gradeSubmission('${t.id}','${sid}')">Calificar</button></div>`:""}</div>`}).join("")}</article>`).join(""):'<div class="empty">Aún no has asignado tareas a este grupo.</div>';
+ renderGrades();
+ renderAttendance();
+}
+function gradeSubmission(tid,sid){let t=tasks.find(x=>x.id===tid),input=document.getElementById(`score-${tid}-${sid}`),v=Number(input.value);if(input.value===""||v<0||v>100){alert("Escribe una calificación de 0 a 100.");return}grades.push({id:id(),teacher:current.id,group:t.group,student:sid,type:"Tarea",name:t.title,value:v});persist();refreshTeacher();alert("Calificación guardada.")}
+document.getElementById("gradeForm").addEventListener("submit",e=>{
+ e.preventDefault();let value=Number(document.getElementById("gradeValue").value);if(value<0||value>100)return;
+ grades.push({id:id(),teacher:current.id,group:document.getElementById("teacherGroup").value,student:document.getElementById("gradeStudent").value,type:document.getElementById("gradeType").value,name:document.getElementById("gradeName").value.trim(),value});persist();e.target.reset();renderGrades();
+});
+function renderGrades(){
+ let group=document.getElementById("teacherGroup").value,students=groupStudents(),list=grades.filter(g=>g.teacher===current.id&&g.group===group);
+ document.getElementById("groupAverages").innerHTML=students.length?`<div class="table-wrap"><table><thead><tr><th>Alumno</th><th>Evaluaciones</th><th>Promedio</th></tr></thead><tbody>${students.map(s=>{let ns=list.filter(g=>g.student===s.id),avg=ns.length?(ns.reduce((a,b)=>a+b.value,0)/ns.length).toFixed(1):"—";return `<tr><td>${esc(s.name)}</td><td>${ns.length}</td><td><b>${avg}</b></td></tr>`}).join("")}</tbody></table></div>`:'<div class="empty">No hay alumnos en este grupo.</div>';
+ document.getElementById("teacherGrades").innerHTML=list.length?`<div class="table-wrap"><table><thead><tr><th>Alumno</th><th>Evaluación</th><th>Tipo</th><th>Calificación</th></tr></thead><tbody>${list.map(g=>`<tr><td>${esc(users.find(u=>u.id===g.student)?.name||"Alumno")}</td><td>${esc(g.name)}</td><td>${esc(g.type)}</td><td>${g.value}/100</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Todavía no hay calificaciones registradas.</div>';
+}
+function today(){let d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+document.getElementById("attendanceDate").value=today();
+function renderAttendance(){
+ let date=document.getElementById("attendanceDate").value||today(),students=groupStudents();
+ document.getElementById("attendanceList").innerHTML=students.length?students.map(s=>{let rec=attendance.find(a=>a.teacher===current.id&&a.student===s.id&&a.date===date),state=rec?.state||"Presente";return `<div class="attendance-row" data-student="${s.id}"><b>${esc(s.name)}</b><div class="attendance-options">${[["Presente","✓","present"],["Falta","✕","absent"],["Retardo","○","late"]].map(([label,symbol,cls])=>`<button type="button" title="${label}" aria-label="${label}" class="${state===label?"selected "+cls:""}" data-state="${label}" onclick="selectAttendance(this)">${symbol}</button>`).join("")}</div></div>`}).join(""):'<div class="empty">No hay alumnos registrados en este grupo.</div>';
+ let hist=attendance.filter(a=>a.teacher===current.id&&students.some(s=>s.id===a.student)).sort((a,b)=>b.date.localeCompare(a.date));
+ document.getElementById("attendanceHistory").innerHTML=hist.length?`<div class="table-wrap"><table><thead><tr><th>Alumno</th><th>Fecha</th><th>Estado</th></tr></thead><tbody>${hist.map(a=>`<tr><td>${esc(users.find(u=>u.id===a.student)?.name||"Alumno")}</td><td>${esc(a.date)}</td><td>${esc(a.state)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Todavía no hay registros de asistencia.</div>';
+}
+function selectAttendance(btn){let row=btn.closest(".attendance-row");row.querySelectorAll("button").forEach(b=>b.className="");btn.classList.add("selected",({Presente:"present",Falta:"absent",Retardo:"late"})[btn.dataset.state])}
+document.getElementById("attendanceDate").addEventListener("change",renderAttendance);
+function saveAttendance(){
+ let date=document.getElementById("attendanceDate").value,group=document.getElementById("teacherGroup").value;
+ document.querySelectorAll("#attendanceList .attendance-row").forEach(row=>{let student=row.dataset.student,state=row.querySelector(".selected")?.dataset.state||"Presente";attendance=attendance.filter(a=>!(a.teacher===current.id&&a.student===student&&a.date===date));attendance.push({id:id(),teacher:current.id,group,student,date,state})});persist();renderAttendance();alert("Asistencia guardada.");
+}
+function refreshStudent(){
+ if(!current||current.role!=="alumno")return;
+ let myTasks=tasks.filter(t=>(t.students||[]).includes(current.id)),myGrades=grades.filter(g=>g.student===current.id),myAttendance=attendance.filter(a=>a.student===current.id).sort((a,b)=>b.date.localeCompare(a.date));
+ document.getElementById("studentTasks").innerHTML=myTasks.length?myTasks.map(t=>{let sub=t.submissions?.[current.id];return `<article class="card" style="margin-bottom:12px"><div class="card-top"><h4>${esc(t.title)}</h4><span class="pill orange">Entrega: ${esc(t.date)}</span></div><p>${esc(t.description)}</p><p>${sub?'<span class="pill green">Tarea entregada</span>':'<span class="pill orange">Pendiente</span>'}</p>${sub?`<p>Archivo enviado: ${esc(sub.fileName)}</p>`:`<label>Adjunta tu archivo</label><input type="file" id="file-${t.id}"><div class="actions"><button onclick="submitFile('${t.id}')">Enviar tarea</button></div>`}</article>`}).join(""):'<div class="empty">No tienes tareas asignadas por el momento.</div>';
+ let avg=myGrades.length?(myGrades.reduce((a,b)=>a+b.value,0)/myGrades.length).toFixed(1):"—";
+ document.getElementById("studentAverage").textContent=avg;document.getElementById("studentGradeCount").textContent=myGrades.length;
+ document.getElementById("studentGrades").innerHTML=myGrades.length?`<div class="table-wrap"><table><thead><tr><th>Evaluación</th><th>Tipo</th><th>Calificación</th></tr></thead><tbody>${myGrades.map(g=>`<tr><td>${esc(g.name)}</td><td>${esc(g.type)}</td><td>${g.value}/100</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Aún no tienes calificaciones.</div>';
+ document.getElementById("studentAttendance").innerHTML=myAttendance.length?`<div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Estado</th></tr></thead><tbody>${myAttendance.map(a=>`<tr><td>${esc(a.date)}</td><td>${esc(a.state)}</td></tr>`).join("")}</tbody></table></div>`:'<div class="empty">Todavía no tienes asistencias registradas.</div>';
+}
+function submitFile(tid){
+ let input=document.getElementById("file-"+tid),file=input.files[0];if(!file){alert("Selecciona un archivo antes de enviar.");return}
+ if(file.size>1500000){alert("El archivo supera 1.5 MB. Para esta demostración, selecciona uno más pequeño.");return}
+ let reader=new FileReader();reader.onload=()=>{let t=tasks.find(x=>x.id===tid);t.submissions=t.submissions||{};t.submissions[current.id]={fileName:file.name,fileData:reader.result,date:today()};persist();refreshStudent();};reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
